@@ -1,0 +1,16 @@
+{
+    "contents" : "library(ggplot2)\nlibrary(scales)\nlibrary(plyr)\nRawData <- read.csv(\"RawData.csv\", header = TRUE)\n\nRawData$Period_order <- factor(RawData$Period, levels= c(\"1m\", \"3m\", \"YtD\", \"1y\", \"2y\", \"3y\", \"5y\"))\nRawData <- ddply(RawData, .(Period, Quarter), \n                 transform, Ypos = cumsum(Percentage) - 0.5*(Percentage))\nRawData$BarWidth <- with(RawData, ifelse(Quarter == \"Last\", 1, 0.85))\n\nhead(RawData)\n\nggplot()+\n  geom_bar(data=RawData,\n            aes(y=Percentage, x = Quarter, fill = Quartile), #, width = BarWidth\n           stat= \"identity\",\n            position = 'stack') +\n            facet_grid(. ~ Period_order) + \n            scale_fill_brewer(palette=\"Greens\") +\n            scale_y_continuous(labels =percent) #+ \n#             geom_text(data=RawData, \n#                       aes(x = Quarter, y = Ypos, \n#                           label = percent(round(Percentage, digits=2)), \n#                           size = 2))\n\n#            scale_fill_manual(values = c(\"blue\",\"green\", \"yellow\", \"red\"))\n",
+    "created" : 1426078068078.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3905677122",
+    "id" : "F2F8329C",
+    "lastKnownWriteTime" : 1426495595,
+    "path" : "G:/GitHub/StckBars/script1.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}
