@@ -12,15 +12,14 @@ head(RawData)
 
 ggplot()+
   geom_bar(data=RawData,
-            aes(y=Percentage, x = Quarter, fill = Quartile), #, width = BarWidth
+            aes(y=Percentage, x = Quarter, fill = Quartile), #width = BarWidth
            stat= "identity",
             position = 'stack') +
-            facet_grid(. ~ Period_order) + 
-            scale_fill_brewer(palette="Greens") +
-            scale_y_continuous(labels =percent) #+ 
-#             geom_text(data=RawData, 
-#                       aes(x = Quarter, y = Ypos, 
-#                           label = percent(round(Percentage, digits=2)), 
-#                           size = 2))
-
-#            scale_fill_manual(values = c("blue","green", "yellow", "red"))
+  facet_grid(. ~ Period_order) + 
+#  scale_fill_brewer(palette="Greens") +
+  scale_y_continuous(labels =percent) +
+  geom_text(data=RawData,
+            aes(x = Quarter, y = Ypos,
+                label = percent(round(Percentage, digits=2))),
+            size = 3, color = 1) +
+  scale_fill_manual(values = c("blue","green", "yellow", "red"))
